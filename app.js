@@ -26,7 +26,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey: TWITTER_CONSUMER_KEY,
     consumerSecret: TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+    callbackURL: "http://"+process.env.DOMAIN"+/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
@@ -86,7 +86,7 @@ app.get('/login', function(req, res){
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-  console.log('Visit: http://127.0.0.1:' + app.get('port'));
+  console.log('Visit: http://127.0.0.1' + app.get('port'));
 });
 
 
