@@ -1,0 +1,31 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/beckel/.nvm/v0.8.22/bin/node',
+1 verbose cli   '/Users/beckel/.nvm/v0.8.22/bin/npm',
+1 verbose cli   'start' ]
+2 info using npm@1.2.14
+3 info using node@v0.8.22
+4 verbose read json /Users/beckel/code/barcamp6/package.json
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart barcamp6@0.0.0
+7 info start barcamp6@0.0.0
+8 verbose unsafe-perm in lifecycle true
+9 silly exec sh "-c" "node app"
+10 silly sh,-c,node app,/Users/beckel/code/barcamp6 spawning
+11 info barcamp6@0.0.0 Failed to exec start script
+12 error barcamp6@0.0.0 start: `node app`
+12 error `sh "-c" "node app"` failed with 1
+13 error Failed at the barcamp6@0.0.0 start script.
+13 error This is most likely a problem with the barcamp6 package,
+13 error not with npm itself.
+13 error Tell the author that this fails on your system:
+13 error     node app
+13 error You can get their info via:
+13 error     npm owner ls barcamp6
+13 error There is likely additional logging output above.
+14 error System Darwin 12.4.0
+15 error command "/Users/beckel/.nvm/v0.8.22/bin/node" "/Users/beckel/.nvm/v0.8.22/bin/npm" "start"
+16 error cwd /Users/beckel/code/barcamp6
+17 error node -v v0.8.22
+18 error npm -v 1.2.14
+19 error code ELIFECYCLE
+20 verbose exit [ 1, true ]

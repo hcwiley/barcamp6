@@ -1,0 +1,27 @@
+{
+  "name": "barcamp6",
+  "version": "0.0.0",
+  "description": "The Node Team's barcamp6 application",
+  "engines": {
+    "node": ">=0.10.x"
+  },
+  "dependencies": {
+    "express": "3.3.x",
+    "jade": "0.33.x",
+    "node-sass": "0.5.x"
+  },
+  "scripts": {
+    "test": "npm test",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bhelx/barcamp6.git"
+  },
+  "homepage": "https://github.com/bhelx/barcamp6",
+  "keywords": [
+    "barcamp"
+  ],
+  "author": "bhelx",
+  "license": "MIT"
+}
