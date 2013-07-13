@@ -11,6 +11,8 @@ var express         = require('express')
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
 var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET;
 
+console.log(process.env);
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
