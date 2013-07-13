@@ -112,10 +112,9 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-  console.log('Visit: http://127.0.0.1' + app.get('port'));
+  console.log('Visit: http://127.0.0.1:' + app.get('port'));
 });
 
 

@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "npm test",
-    "start": "node app"
+    "start": "env $(cat .env) node app"
   },
   "repository": {
     "type": "git",
