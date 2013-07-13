@@ -11,8 +11,6 @@ var express         = require('express')
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
 var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET;
 
-console.log(process.env);
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -45,6 +43,19 @@ passport.use(new TwitterStrategy({
 
 var app = express();
 
+// development only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+  app.use(
+    sass.middleware({
+        src         : __dirname + '/sass'
+      , dest        : __dirname + '/public'
+      , debug       : true
+      , force       : true
+    })
+  );
+}
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -60,19 +71,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-  app.use(
-    sass.middleware({
-        src         : __dirname + '/sass'
-      , dest        : __dirname + '/public'
-      , debug       : true
-      , outputStyle : 'compressed'
-    })
-  );
-}
 
 app.get('/', function(req, res){
   res.render('index', { user: req.user, layout: 'layout' });
