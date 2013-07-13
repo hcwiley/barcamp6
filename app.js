@@ -26,7 +26,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey: TWITTER_CONSUMER_KEY,
     consumerSecret: TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://"+process.env.DOMAIN"+/auth/twitter/callback"
+    callbackURL: "http://"+process.env.DOMAIN+"/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
