@@ -29,7 +29,7 @@ nvm alias deafult 0.10.13
 
 ## Running the application
 
-First clone this repo:
+First clone this repo. We'd prefer you clone and use a fork if you know how to do that.
 
 ```bash
 git clone git@github.com:bhelx/barcamp6.git
