@@ -7,8 +7,11 @@
   },
   "dependencies": {
     "express": "3.3.x",
-    "jade": "0.33.x",
-    "node-sass": "0.5.x"
+    "ejs": "0.7.x",
+    "express-partials": "0.1.x",
+    "node-sass": "0.5.x",
+    "passport": "0.1.x",
+    "passport-twitter": "0.1.x"
   },
   "scripts": {
     "test": "npm test",
