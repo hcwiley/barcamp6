@@ -33,8 +33,10 @@ TweetSchema.statics.tagStats = function (done) {
   this.aggregate(
     { $project: { tags: 1 } },
     { $unwind: "$tags" },
+    { $project: { tags: { $toLower: "$tags"} } },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
-    { $sort: { tags: 1 } },
+    { $sort: { count: -1 } },
+    { $limit : 10 },
     done
   );
 };
