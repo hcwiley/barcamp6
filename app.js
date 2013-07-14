@@ -90,7 +90,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/tag_stats', routes.topFive);
-app.get('/leaderboard', routes.leaderboard);
+app.get('/leaderboard/:tag', routes.leaderboard);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
