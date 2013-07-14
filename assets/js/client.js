@@ -11,11 +11,6 @@ $(window).ready(function(){
     if( didDisconnect ) {
       window.location = window.location.pathname;
     } else {
-      var el = $(jade.templates['tweet-box.jade']({
-        text: data,
-        tags: []
-      }));
-      $("#socket-stream").append(el);
       socket.emit("ripp-it", "croak");
     }
   });
@@ -32,6 +27,20 @@ $(window).ready(function(){
     }));
     $("#socket-stream").append(el);
     socket.emit("ripp-it", "croak");
+  });
+
+  $("#tweets-wrapper").click(function(){
+    me = $(this);
+    main = $("#main");
+    if( main.hasClass("collapsed") ){
+      main.removeClass("collapsed");
+      me.find('i').removeClass("icon-arrow-left");
+      me.find('i').addClass("icon-arrow-right");
+    } else {
+      main.addClass("collapsed");
+      me.find('i').removeClass("icon-arrow-right");
+      me.find('i').addClass("icon-arrow-left");
+    }
   });
   
 });

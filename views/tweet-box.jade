@@ -1,8 +1,10 @@
 .span3.tweet-box
-  h3 a tweet
-  hr
   p=text
-  ul
+  i.icon-tags.inline
+  h4.inline tags
+  ul.tags
     for tag in tags
-      li
-        a(href='##{tag}')=tag
+      .tag
+        a(href='##{tag}')
+          i.icon-tag.inline
+          p.inline=tag

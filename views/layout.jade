@@ -13,7 +13,10 @@ html
         else
           a.brand(href='/') Home
           a.brand(href='/login') Log In
-    .row
+        a.brand(href='/about') About
+        a.brand(href='http://nowinnola.blogspot.com/', target="_blank") Blog
+      .nav-stripe
+    #main.collapsed
       block content
   != jadeTemplates()        
   !=js('client')

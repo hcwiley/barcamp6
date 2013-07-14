@@ -1,24 +1,130 @@
-@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-
 @import "bootstrap/bootstrap";
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
 body{
   margin:0;
   .nav {
-    #gradient > .vertical(#ddd,#eee);
+    .nav-stripe {
+      width: 100%;
+      height: 2px;
+      #gradient > .vertical(#ddd,#eee);
+    }
+    height: 3%;
+    margin: 0;
+    padding-top: 10px;
+    a {
+      border-right: 1px solid #ccc;
+      padding: 0 10px;
+    }
+    a:last-child {
+      border-right: none;
+    }
   }
   h1{
     margin:0 auto;
     text-align:center;
     font-size:8em;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
     color:#0080FF;
     opacity:0.7;
+  }
+
+  #main { 
+    height: 100%;
+    width: 100%;
+    margin-left: 0;
+    transition: margin 300ms;
+    -webkit-transition: margin 300ms;
+    position: relative;
+
+    .central-wrapper {
+      width: 97%;
+      height: 100%;
+      position: relative;
+
+      .most-recent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: #39b54a;
+        color: white;
+
+        .main-tag {
+          font-size: 6em;
+          margin: -20px 0 0;
+          height: 100%;
+          top: 50%;
+          left: 20%;
+          position: absolute;
+        }
+      }
+      .leaders {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        width: 20%;
+        color: white;
+        color: rgba(255,255,255,0.5);
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        h4 {
+          font-size: .85em;
+          text-transform: uppercase;
+          font-weight: 300;
+          letter-spacing: 1px;
+        }
+      }
+    }
+    #tweets-wrapper {
+      position: absolute;
+      height: 100%;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      overflow: scroll;
+      box-sizing: border-box;
+      padding: 1em;
+      width: 360px;
+      margin-right: -340px;
+      color: #333;
+      .tweets {
+        position: relative;
+        left: 35px;
+      }
+    }
+    #tweets-wrapper:hover {
+      cursor: pointer;
+    }
+  }
+  #main {
+    margin-left: -360px;
+  }
+  #main.collapsed {
+    margin-left: 0;
   }
 }
 
 .tweet-box {
   border-radius: 5px;
   border: 1px solid #bbb;
+  .tag:hover {
+    opacity: hover;
+    cursor: pointer;
+  } 
 }
 
+.inline {
+  display: inline-block;
+  margin: 0 5px;
+}
