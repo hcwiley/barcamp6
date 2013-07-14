@@ -10,7 +10,7 @@ var TweetSchema = new Schema({
   , user       : { id: Number, name: String, image: String, screen_name: String }
   , tags       : [String]
 }, {
-  capped: { size: 1024, max: 1000, autoIndexId: true }
+  capped: { size: 536870912, autoIndexId: true }
 });
 
 TweetSchema.statics.build = function (twitter_obj) {
