@@ -4,8 +4,14 @@ html, body {
   height: 100%;
   width: 100%;
 }
+a{
+  color: #39b54a;
+}
 body{
   margin:0;
+  hr{
+    border: 1px solid #39b54a;
+  }
   .nav {
     .nav-stripe {
       width: 100%;
@@ -94,13 +100,14 @@ body{
       bottom: 0;
       overflow: scroll;
       box-sizing: border-box;
-      padding: 1em;
+      padding: 0;
       width: 360px;
       margin-right: -340px;
       color: #333;
       .tweets {
         position: relative;
         left: 35px;
+        width: 300px;
       }
     }
     #tweets-wrapper:hover {
@@ -116,8 +123,10 @@ body{
 }
 
 .tweet-box {
-  border-radius: 5px;
-  border: 1px solid #bbb;
+  width: 100%;
+  margin: 10px 0px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #39b54a;
   .tag:hover {
     opacity: hover;
     cursor: pointer;
