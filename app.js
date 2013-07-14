@@ -114,13 +114,6 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 
 // Socket.io setup
 var io = socketIo.listen(server)
-// Make socket.io a little quieter
-io.set('log level', 1);
-
-if ('production' == app.get('env')) {
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10);
-}
 
 sockets(io);
 
