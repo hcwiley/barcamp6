@@ -1,13 +1,17 @@
-var express         = require('express')
-  , routes          = require('./routes')
-  , http            = require('http')
-  , path            = require('path')
-  , sass            = require('node-sass')
-  , passport        = require('passport')
-  , TwitterStrategy = require('passport-twitter').Strategy
-  , partials        = require('express-partials')
-  , io              = require('socket.io')
-  , mongoose        = require('mongoose')
+var express           = require('express')
+  , routes            = require('./routes')
+  , http              = require('http')
+  , path              = require('path')
+  , sass              = require('node-sass')
+  , passport          = require('passport')
+  , TwitterStrategy   = require('passport-twitter').Strategy
+  , partials          = require('express-partials')
+  , io                = require('socket.io')
+  , mongoose          = require('mongoose')
+  , MongoStore        = require('connect-mongo')(express)
+  , sessionStore      = new MongoStore({ url: process.env.MONGO_DB })
+  , socketIo          = require('socket.io')
+  , passportSocketIo  = require("passport.socketio")
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -57,7 +61,7 @@ if ('development' == app.get('env')) {
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 app.use(partials()); // ejs partials
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -104,9 +108,41 @@ app.get('/logout', function(req, res){
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(){
-  io.listen(server);
   console.log('Express server listening on port ' + app.get('port'));
   console.log('Visit: http://127.0.0.1:' + app.get('port'));
 });
 
+// Socket.io setup
+var io = socketIo.listen(server)
+// Make socket.io a little quieter
+io.set('log level', 1);
+// Give socket.io access to the passport user from Express
+//io.set('authorization', passportSocketIo.authorize({
+  //passport: passport,
+  //sessionKey: 'connect.sid',
+  //sessionStore: sessionStore,
+  //sessionSecret: process.env.SESSION_SECRET,
+  //success: function(data, accept) {
+    //accept(null, true);
+  //},
+  //fail: function(data, accept) { // keeps socket.io from bombing when user isn't logged in
+    //accept(null, true);
+  //}
+//}));
+// Heroku doesn't support WebSockets, so use long-polling for Heroku
+if ('production' == app.get('env')) {
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10);
+}
+
+// listen for socket connections
+io.sockets.on("connection", function(socket){
+
+  socket.on("connection", function(data){
+    console.log("socket just came online");
+  });
+
+  socket.emit("connection", "I am your father");
+
+});
 
