@@ -1,7 +1,7 @@
 //=require socket.io
 //=require jquery
 
-didDisconnect = false
+var didDisconnect = false;
 
 $(window).ready(function(){
 
@@ -11,14 +11,21 @@ $(window).ready(function(){
     if( didDisconnect ) {
       window.location = window.location.pathname;
     } else {
-      var li = $("<li>"+data+"</li>");
-      $("#socket-stream").append(li);
+      var el = $("<div class='span3'>"+data+"</div>");
+      $("#socket-stream").append(el);
       socket.emit("ripp-it", "croak");
     }
   });
 
   socket.on("disconnect", function(data){
     didDisconnect = true;
+  });
+
+  // listen for the tweeters
+  socket.on("tweet", function(data){
+    var el = $("<div class='span3'>"+data+"</div>");
+    $("#socket-stream").append(el);
+    socket.emit("ripp-it", "croak");
   });
   
 });
