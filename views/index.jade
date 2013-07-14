@@ -1,10 +1,14 @@
 extends layout
 block content
-  .row
-    div.span12
-      h1 Hello World
-  br
-  hr
-  br
-  .row
-    #socket-stream.span10
+  .central-wrapper
+    .span9.most-recent
+      - var mainTag = '#foo-bar'
+      include most-recent
+    .span4.leaders
+      include leaders
+  #tweets-wrapper
+    i.icon-arrow-left.icon-white
+    .tweets
+      h4 latest tweets
+      hr
+      #socket-stream

@@ -13,7 +13,8 @@ html
         else
           a.brand(href='/') Home
           a.brand(href='/login') Log In
-    .row
+      .nav-stripe
+    #main.collapsed
       block content
   != jadeTemplates()        
   !=js('client')

@@ -2,10 +2,28 @@
 
 @import "bootstrap/bootstrap";
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
 body{
   margin:0;
   .nav {
-    #gradient > .vertical(#ddd,#eee);
+    .nav-stripe {
+      width: 100%;
+      height: 2px;
+      #gradient > .vertical(#ddd,#eee);
+    }
+    height: 3%;
+    margin: 0;
+    padding-top: 10px;
+    a {
+      border-right: 1px solid #ccc;
+      padding: 0 10px;
+    }
+    a:last-child {
+      border-right: none;
+    }
   }
   h1{
     margin:0 auto;
@@ -15,10 +33,76 @@ body{
     color:#0080FF;
     opacity:0.7;
   }
+
+  #main { 
+    margin-top: 10px;
+    height: 93%;
+    width: 100%;
+    .central-wrapper {
+      transition: margin 1s;
+      -webkit-transition: margin 1s;
+      margin-left: -270px;
+      width: 95%;
+      height: 100%;
+      position: relative;
+      float: left;
+      .most-recent {
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        height: 100%;
+        width: 70%;
+        .main-tag {
+          margin: -20px 0 0 0;
+          height: 100%;
+          top: 50%;
+          left: 10%;
+          position: absolute;
+        }
+      }
+      .leaders {
+        height: auto;
+        width: 25%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+    }
+    #tweets-wrapper {
+      position: relative;
+      float: left;
+      height: 95%;
+      padding: 5px 10px;
+      width: 300px;
+      border-radius: 5px;
+      #gradient > .horizontal(#646,#333);
+      margin-right: -320px;
+      .tweets {
+        position: relative;
+        * {
+          color: #fff;
+        }
+      }
+    }
+    #tweets-wrapper:hover {
+      cursor: pointer;
+    }
+  }
+  #main.collapsed {
+    .central-wrapper {
+      margin-left: 0px;
+    }
+  }
 }
 
 .tweet-box {
   border-radius: 5px;
   border: 1px solid #bbb;
+  .tag:hover {
+    opacity: hover;
+    cursor: pointer;
+  } 
 }
 
+.inline {
+  display: inline-block;
+  margin: 0 5px;
+}
