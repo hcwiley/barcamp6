@@ -29,7 +29,7 @@ TweetSchema.statics.build = function (twitter_obj) {
 };
 
 TweetSchema.statics.topFiveTags = function (done) {
-  Tweet.aggregate(
+  this.aggregate(
     { $project: { tags: 1 } },
     { $unwind: "$tags" },
     { $project: { tags: { $toLower: "$tags"} } },
@@ -54,9 +54,10 @@ TweetSchema.statics.topFiveTagsNormalized = function (done) {
 }
 
 TweetSchema.statics.topFiveTagsFiltered = function (hashTags, done) {
-  Tweet.aggregate(
+  this.aggregate(
     { $project: { tags: 1 } },
     { $unwind: "$tags" },
+    { $project: { tags: { $toLower: "$tags"} } },
     { $match: { tags: { $in: hashTags} } },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
     { $sort: { count: -1 } },
@@ -82,6 +83,7 @@ TweetSchema.statics.tagLeaderboard = function (tag,done) {
   this.aggregate(
     { $project: { tags: 1, user: 1 } },
     { $unwind: "$tags" },
+    { $project: { tags: { $toLower: "$tags" } , user: "$user" } },
     { $match: { tags: tag } },
     { $group: { _id : "$user", count: { $sum: 1 } } },
     { $sort: { count: -1 } },
