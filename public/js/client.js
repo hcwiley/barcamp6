@@ -1,6 +1,3 @@
-//=require socket.io
-//=require jquery
-
 var didDisconnect = false;
 
 $(window).ready(function(){
@@ -34,6 +31,17 @@ $(window).ready(function(){
       stats: data.stats
     }));
     $(".leaders").html(el);
+  });
+
+  $.get("/latest", function(json){
+    for(d in json){
+      var data = json[d];
+      var el = $(jade.templates['tweet-box.jade']({
+        text: data.text,
+        tags: data.tags
+      }));
+      $("#socket-stream").append(el);
+    }
   });
 
   $("#tweets-wrapper").click(function(){
