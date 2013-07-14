@@ -1,0 +1,8 @@
+.span3.tweet-box
+  h3 a tweet
+  hr
+  p=text
+  ul
+    for tag in tags
+      li
+        a(href='##{tag}')=tag

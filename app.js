@@ -2,7 +2,7 @@ var express           = require('express')
   , routes            = require('./routes')
   , http              = require('http')
   , path              = require('path')
-  , sass              = require('node-sass')
+  , lessMiddleware = require('less-middleware')
   , passport          = require('passport')
   , TwitterStrategy   = require('passport-twitter').Strategy
   , partials          = require('express-partials')
@@ -13,6 +13,7 @@ var express           = require('express')
   , sockets           = require('./sockets')
   , models            = require('./models')
   , User              = models.User
+  , jadeBrowser       = require("jade-browser")
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -54,17 +55,19 @@ passport.use(new TwitterStrategy({
 
 var app = express();
 
+// export jade templates to reuse on client side
+// This includes a kind of terrible cache-buster hack
+// It generates a new cache-busting query string for the script tag every time the server starts
+// This should probably only happen every time there's a change to the templates.js file
+var jadeTemplatesPath = '/js/templates.js';
+app.use(jadeBrowser(jadeTemplatesPath, ['*.jade', '*/*.jade', '*/*/*.jade'], { root: __dirname + '/views', minify: true }));
+var jadeTemplatesCacheBuster = (new Date()).getTime();
+var jadeTemplatesSrc = jadeTemplatesPath + '?' + jadeTemplatesCacheBuster;
+global.jadeTemplates = function() { return '<script src="' + jadeTemplatesSrc + '" type="text/javascript"></script>'; }
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
-  app.use(
-    sass.middleware({
-        src         : __dirname + '/assets/sass'
-      , dest        : __dirname + '/public'
-      , debug       : true
-      , force       : true
-    })
-  );
 }
 
 // all environments
@@ -80,6 +83,7 @@ app.use(express.methodOverride());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
+app.use(lessMiddleware({ src: __dirname + '/public' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // use the connect assets middleware for Snockets sugar
