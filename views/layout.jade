@@ -4,16 +4,6 @@ html
     title Barcamp6
     !=css('client')
   body
-    .nav.nav-fixed-top
-      ul
-        if user
-          a.brand(href='/') Home
-          a.brand(href='/account') Account
-          a.brand(href='/logout') Log Out
-        else
-          a.brand(href='/') Home
-          a.brand(href='/login') Log In
-      .nav-stripe
     #main.collapsed
       block content
   != jadeTemplates()        
