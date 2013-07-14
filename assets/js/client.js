@@ -29,6 +29,13 @@ $(window).ready(function(){
     socket.emit("ripp-it", "croak");
   });
 
+  $.get('/tag_stats', function(data) {
+    var el = $(jade.templates['leaders.jade']({
+      stats: data.stats
+    }));
+    $(".leaders").html(el);
+  });
+
   $("#tweets-wrapper").click(function(){
     me = $(this);
     main = $("#main");
