@@ -11,7 +11,7 @@ var express           = require('express')
   , MongoStore        = require('connect-mongo')(express)
   , sessionStore      = new MongoStore({ url: process.env.MONGO_DB })
   , socketIo          = require('socket.io')
-  , passportSocketIo  = require("passport.socketio")
+  , sockets           = require('./sockets')
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -116,33 +116,11 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = socketIo.listen(server)
 // Make socket.io a little quieter
 io.set('log level', 1);
-// Give socket.io access to the passport user from Express
-//io.set('authorization', passportSocketIo.authorize({
-  //passport: passport,
-  //sessionKey: 'connect.sid',
-  //sessionStore: sessionStore,
-  //sessionSecret: process.env.SESSION_SECRET,
-  //success: function(data, accept) {
-    //accept(null, true);
-  //},
-  //fail: function(data, accept) { // keeps socket.io from bombing when user isn't logged in
-    //accept(null, true);
-  //}
-//}));
-// Heroku doesn't support WebSockets, so use long-polling for Heroku
+
 if ('production' == app.get('env')) {
   io.set("transports", ["xhr-polling"]); 
   io.set("polling duration", 10);
 }
 
-// listen for socket connections
-io.sockets.on("connection", function(socket){
-
-  socket.on("connection", function(data){
-    console.log("socket just came online");
-  });
-
-  socket.emit("connection", "I am your father");
-
-});
+sockets(io);
 
