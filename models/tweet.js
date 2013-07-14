@@ -9,6 +9,8 @@ var TweetSchema = new Schema({
   , text       : String
   , user       : { id: Number, name: String, image: String, screen_name: String }
   , tags       : [String]
+}, {
+  capped: { size: 1024, max: 1000, autoIndexId: true }
 });
 
 TweetSchema.statics.build = function (twitter_obj) {
@@ -30,6 +32,7 @@ TweetSchema.statics.topFiveTags = function (done) {
   Tweet.aggregate(
     { $project: { tags: 1 } },
     { $unwind: "$tags" },
+    { $project: { tags: { $toLower: "$tags"} } },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
     { $sort: { count: -1 } },
     { $limit: 5},
@@ -76,7 +79,7 @@ TweetSchema.statics.topFiveTagsNormalizedFiltered = function (hashTags, done) {
 }
 
 TweetSchema.statics.tagLeaderboard = function (tag,done) {
-  Tweet.aggregate(
+  this.aggregate(
     { $project: { tags: 1, user: 1 } },
     { $unwind: "$tags" },
     { $match: { tags: tag } },

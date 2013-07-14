@@ -1,14 +1,18 @@
-var express         = require('express')
-  , routes          = require('./routes')
-  , http            = require('http')
-  , path            = require('path')
-  , sass            = require('node-sass')
-  , passport        = require('passport')
-  , TwitterStrategy = require('passport-twitter').Strategy
-  , partials        = require('express-partials')
-  , io              = require('socket.io')
-  , mongoose        = require('mongoose')
-  , User            = require('./models').User
+var express           = require('express')
+  , routes            = require('./routes')
+  , http              = require('http')
+  , path              = require('path')
+  , sass              = require('node-sass')
+  , passport          = require('passport')
+  , TwitterStrategy   = require('passport-twitter').Strategy
+  , partials          = require('express-partials')
+  , io                = require('socket.io')
+  , mongoose          = require('mongoose')
+  , socketIo          = require('socket.io')
+  , connectAssets     = require("connect-assets")
+  , sockets           = require('./sockets')
+  , models            = require('./models')
+  , User              = models.User
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -55,7 +59,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   app.use(
     sass.middleware({
-        src         : __dirname + '/sass'
+        src         : __dirname + '/assets/sass'
       , dest        : __dirname + '/public'
       , debug       : true
       , force       : true
@@ -66,8 +70,7 @@ if ('development' == app.get('env')) {
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(partials()); // ejs partials
+app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser(process.env.COOKIE_SECRET || 'barcampz'));
@@ -79,9 +82,15 @@ app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+// use the connect assets middleware for Snockets sugar
+app.use(connectAssets());
+
 app.get('/', function(req, res){
-  res.render('index', { user: req.user, layout: 'layout' });
+  res.render('index', { user: req.user });
 });
+
+app.get('/tag_stats', routes.topFive);
+app.get('/leaderboard/:tag', routes.leaderboard);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
@@ -89,11 +98,11 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user, layout: 'layout' });
+  res.render('account', { user: req.user });
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user, layout: 'layout' });
+  res.render('login', { user: req.user });
 });
 
 app.get('/auth/twitter',
@@ -113,9 +122,12 @@ app.get('/logout', function(req, res){
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(){
-  io.listen(server);
   console.log('Express server listening on port ' + app.get('port'));
   console.log('Visit: http://127.0.0.1:' + app.get('port'));
 });
 
+// Socket.io setup
+var io = socketIo.listen(server)
+
+sockets(io);
 
