@@ -30,7 +30,7 @@ TweetSchema.statics.build = function (twitter_obj) {
 
 
 TweetSchema.statics.tagStats = function (done) {
-  Tweet.aggregate(
+  this.aggregate(
     { $project: { tags: 1 } },
     { $unwind: "$tags" },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
@@ -40,7 +40,7 @@ TweetSchema.statics.tagStats = function (done) {
 };
 
 TweetSchema.statics.tagLeaderboard = function (tag,done) {
-  Tweet.aggregate(
+  this.aggregate(
     { $project: { tags: 1, user: 1 } },
     { $unwind: "$tags" },
     { $match: { tags: tag } },

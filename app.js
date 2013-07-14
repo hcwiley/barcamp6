@@ -89,7 +89,7 @@ app.get('/', function(req, res){
   res.render('index', { user: req.user });
 });
 
-app.get('/tag_stats', routes.tagStats);
+app.get('/tag_stats', routes.topFive);
 app.get('/leaderboard', routes.leaderboard);
 
 function ensureAuthenticated(req, res, next) {
