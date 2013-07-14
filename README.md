@@ -1,7 +1,16 @@
 
 ## Setup
 
-This project uses the latest node 0.10.13.
+This project uses:
+
+* the latest [node](http://nodejs.org/) 0.10.13.
+* [Express](http://expressjs.com/) as the MVC micro web framework
+* [Sass](http://sass-lang.com/) for stylesheets.
+* [EJS](http://embeddedjs.com/) for html templating
+* [socket.io](http://socket.io/) for long polling
+* [mongodb](http://www.mongodb.org/) for persistence
+* [mongoose](http://mongoosejs.com/) as an ODM layer for mongodb
+
 
 ### OS X
 
@@ -25,6 +34,18 @@ We'd also recommend you make the new node your default just in case it slips bac
 
 ```bash
 nvm alias deafult 0.10.13
+```
+
+To install mongodb we also recommend homebrew:
+
+```bash
+brew install mongodb
+```
+
+You can follow the post-install instructions to set mongodb up as a service or you can run it in the foreground with:
+
+```bash
+mongodb
 ```
 
 ## Running the application
