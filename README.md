@@ -1,5 +1,5 @@
 
-## Setup
+## The Stack
 
 This project uses:
 
@@ -11,6 +11,7 @@ This project uses:
 * [mongodb](http://www.mongodb.org/) for persistence
 * [mongoose](http://mongoosejs.com/) as an ODM layer for mongodb
 
+## Setup
 
 ### OS X
 
