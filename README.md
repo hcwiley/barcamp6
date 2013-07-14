@@ -11,6 +11,15 @@ This project uses:
 * [mongodb](http://www.mongodb.org/) for persistence
 * [mongoose](http://mongoosejs.com/) as an ODM layer for mongodb
 
+## Contributing
+
+We'd prefer that you fork and use Pull Requests. *Please do not commit directly to master*
+
+* Fork to your account
+* Create a branch with a descriptive name for the feature you are implementing
+* Send the Pull Request from your branch to bhelx/barcamp6#master
+* Have Ben or Matt review/merge
+
 ## Setup
 
 ### OS X
