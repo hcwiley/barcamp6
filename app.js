@@ -52,8 +52,6 @@ passport.use(new TwitterStrategy({
   }
 ));
 
-mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/barcamp6');
-
 var app = express();
 
 // development only
