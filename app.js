@@ -12,6 +12,7 @@ var express           = require('express')
   , sessionStore      = new MongoStore({ url: process.env.MONGO_DB })
   , socketIo          = require('socket.io')
   , passportSocketIo  = require("passport.socketio")
+  , connectAssets     = require("connect-assets")
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -50,7 +51,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   app.use(
     sass.middleware({
-        src         : __dirname + '/sass'
+        src         : __dirname + '/assets/sass'
       , dest        : __dirname + '/public'
       , debug       : true
       , force       : true
@@ -62,7 +63,6 @@ if ('development' == app.get('env')) {
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(partials()); // ejs partials
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser(process.env.COOKIE_SECRET || 'barcampz'));
@@ -74,8 +74,11 @@ app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+// use the connect assets middleware for Snockets sugar
+app.use(connectAssets());
+
 app.get('/', function(req, res){
-  res.render('index', { user: req.user, layout: 'layout' });
+  res.render('index', { user: req.user });
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -84,11 +87,11 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user, layout: 'layout' });
+  res.render('account', { user: req.user });
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user, layout: 'layout' });
+  res.render('login', { user: req.user });
 });
 
 app.get('/auth/twitter',

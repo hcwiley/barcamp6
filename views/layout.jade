@@ -1,9 +1,8 @@
-!!! 5
+doctype 5
 html
   head
     title Barcamp6
     link(href='/stylesheets/style.css', rel='stylesheet', type='text/css')
-    script(src='/socket.io/socket.io.js')
   body
     header
       if user
@@ -13,4 +12,6 @@ html
       else
         a(href='/') Home
         a(href='/login') Log In
-
+    .row.container-fluid
+      block content
+  !=js('client')
