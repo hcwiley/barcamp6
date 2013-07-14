@@ -1,17 +1,17 @@
 var Tweet = require('../models').Tweet;
 
-var tags = ["#nolabulls",
-            "#totc",
-            "#nolacommunity",
-            "#neworleanspelicans",
-            "#nola",
-            "#essencefest",
-            "#nolacrawl",
-            "#NewOrleans",
-            "#whodat",
-            "#nolaproblems",
-            "#onlyinnola",
-            "#barcampnola"
+var tags = ["nolabulls",
+            "totc",
+            "nolacommunity",
+            "neworleanspelicans",
+            "nola",
+            "essencefest",
+            "nolacrawl",
+            "neworleans",
+            "whodat",
+            "nolaproblems",
+            "onlyinnola",
+            "barcampnola"
            ]
 
 exports.index = function(req, res){
