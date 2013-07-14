@@ -13,6 +13,7 @@ var express           = require('express')
   , sockets           = require('./sockets')
   , models            = require('./models')
   , User              = models.User
+  , jadeBrowser       = require("jade-browser")
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -53,6 +54,16 @@ passport.use(new TwitterStrategy({
 ));
 
 var app = express();
+
+// export jade templates to reuse on client side
+// This includes a kind of terrible cache-buster hack
+// It generates a new cache-busting query string for the script tag every time the server starts
+// This should probably only happen every time there's a change to the templates.js file
+var jadeTemplatesPath = '/js/templates.js';
+app.use(jadeBrowser(jadeTemplatesPath, ['*.jade', '*/*.jade', '*/*/*.jade'], { root: __dirname + '/views', minify: true }));
+var jadeTemplatesCacheBuster = (new Date()).getTime();
+var jadeTemplatesSrc = jadeTemplatesPath + '?' + jadeTemplatesCacheBuster;
+global.jadeTemplates = function() { return '<script src="' + jadeTemplatesSrc + '" type="text/javascript"></script>'; }
 
 // development only
 if ('development' == app.get('env')) {

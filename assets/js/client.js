@@ -11,7 +11,9 @@ $(window).ready(function(){
     if( didDisconnect ) {
       window.location = window.location.pathname;
     } else {
-      var el = $("<div class='span3'>"+data+"</div>");
+      var el = $(jade.templates['tweet-box.jade']({
+        data: data,
+      }));
       $("#socket-stream").append(el);
       socket.emit("ripp-it", "croak");
     }
@@ -23,7 +25,9 @@ $(window).ready(function(){
 
   // listen for the tweeters
   socket.on("tweet", function(data){
-    var el = $("<div class='span3'>"+data+"</div>");
+    var el = $(jade.templates['tweet-box.jade']({
+      data: data,
+    }));
     $("#socket-stream").append(el);
     socket.emit("ripp-it", "croak");
   });
