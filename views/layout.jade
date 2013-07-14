@@ -2,16 +2,17 @@ doctype 5
 html
   head
     title Barcamp6
-    link(href='/stylesheets/style.css', rel='stylesheet', type='text/css')
+    !=css('client')
   body
-    header
-      if user
-        a(href='/') Home
-        a(href='/account') Account
-        a(href='/logout') Log Out
-      else
-        a(href='/') Home
-        a(href='/login') Log In
-    .row.container-fluid
+    .nav.nav-fixed-top
+      ul
+        if user
+          a.brand(href='/') Home
+          a.brand(href='/account') Account
+          a.brand(href='/logout') Log Out
+        else
+          a.brand(href='/') Home
+          a.brand(href='/login') Log In
+    .row
       block content
   !=js('client')
