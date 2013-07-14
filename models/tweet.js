@@ -9,6 +9,8 @@ var TweetSchema = new Schema({
   , text       : String
   , user       : Number
   , tags       : [String]
+}, {
+  capped: { size: 1024, max: 1000, autoIndexId: true }
 });
 
 TweetSchema.statics.build = function (twitter_obj) {
@@ -19,6 +21,17 @@ TweetSchema.statics.build = function (twitter_obj) {
   self.tags = _.pluck(twitter_obj.entities.hashtags, 'text');
 
   return self;
+};
+
+
+TweetSchema.statics.tagStats = function (done) {
+  Tweet.aggregate(
+    { $project: { tags: 1 } },
+    { $unwind: "$tags" },
+    { $group: { _id: "$tags", count: { $sum: 1 } } },
+    { $sort: { tags: 1 } },
+    done
+  );
 };
 
 module.exports = mongoose.model('Tweet', TweetSchema);
