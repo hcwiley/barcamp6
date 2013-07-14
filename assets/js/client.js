@@ -19,6 +19,11 @@ $(window).ready(function(){
     }
   });
 
+  socket.on("tweet", function(data){
+    var li = $("<li>"+data.text+"</li>");
+    $("#socket-stream").append(li);
+  });
+
   socket.on("disconnect", function(data){
     didDisconnect = true;
   });

@@ -12,7 +12,7 @@ module.exports = function(io) {
   });
 
   stream.on('data', function (doc) {
-    io.emit("ontweet", doc);
+    io.sockets.emit("tweet", doc);
   });
 
   io.configure('production', function (){
