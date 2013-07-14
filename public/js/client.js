@@ -1,6 +1,3 @@
-//=require socket.io
-//=require jquery
-
 var didDisconnect = false;
 
 $(window).ready(function(){
