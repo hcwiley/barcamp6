@@ -12,16 +12,12 @@ $(window).ready(function(){
       window.location = window.location.pathname;
     } else {
       var el = $(jade.templates['tweet-box.jade']({
-        data: data,
+        text: data,
+        tags: []
       }));
       $("#socket-stream").append(el);
       socket.emit("ripp-it", "croak");
     }
-  });
-
-  socket.on("tweet", function(data){
-    var li = $("<li>"+data.text+"</li>");
-    $("#socket-stream").append(li);
   });
 
   socket.on("disconnect", function(data){
@@ -31,7 +27,8 @@ $(window).ready(function(){
   // listen for the tweeters
   socket.on("tweet", function(data){
     var el = $(jade.templates['tweet-box.jade']({
-      data: data,
+      text: data.text,
+      tags: data.tags
     }));
     $("#socket-stream").append(el);
     socket.emit("ripp-it", "croak");
