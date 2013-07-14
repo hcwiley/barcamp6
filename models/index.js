@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/barcamp6');
+mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/barcamp6');
 
 module.exports = {
     Tweet    : require('./tweet')
