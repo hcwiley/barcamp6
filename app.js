@@ -2,7 +2,7 @@ var express           = require('express')
   , routes            = require('./routes')
   , http              = require('http')
   , path              = require('path')
-  , sass              = require('node-sass')
+  , lessMiddleware = require('less-middleware')
   , passport          = require('passport')
   , TwitterStrategy   = require('passport-twitter').Strategy
   , partials          = require('express-partials')
@@ -57,14 +57,6 @@ var app = express();
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
-  app.use(
-    sass.middleware({
-        src         : __dirname + '/assets/sass'
-      , dest        : __dirname + '/public'
-      , debug       : true
-      , force       : true
-    })
-  );
 }
 
 // all environments
@@ -80,6 +72,7 @@ app.use(express.methodOverride());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
+app.use(lessMiddleware({ src: __dirname + '/public' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // use the connect assets middleware for Snockets sugar
