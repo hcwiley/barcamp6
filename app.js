@@ -89,6 +89,7 @@ app.get('/', function(req, res){
   res.render('index', { user: req.user });
 });
 
+app.get('/latest', routes.lastTen);
 app.get('/tag_stats', routes.topFive);
 app.get('/leaderboard/:tag', routes.leaderboard);
 
