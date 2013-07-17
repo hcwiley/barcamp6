@@ -2,7 +2,6 @@ var express           = require('express')
   , routes            = require('./routes')
   , http              = require('http')
   , path              = require('path')
-  , lessMiddleware = require('less-middleware')
   , passport          = require('passport')
   , TwitterStrategy   = require('passport-twitter').Strategy
   , partials          = require('express-partials')
@@ -14,6 +13,7 @@ var express           = require('express')
   , models            = require('./models')
   , User              = models.User
   , jadeBrowser       = require("jade-browser")
+  , sass              = require("node-sass")
   ;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -71,6 +71,15 @@ if ('development' == app.get('env')) {
 }
 
 // all environments
+app.use(
+  sass.middleware({
+      src: __dirname + '/sass'
+    , dest: __dirname + '/public'
+    , debug: true
+    , outputStyle: 'compressed'
+  })
+);
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -83,7 +92,6 @@ app.use(express.methodOverride());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
-app.use(lessMiddleware({ src: __dirname + '/public' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // use the connect assets middleware for Snockets sugar
