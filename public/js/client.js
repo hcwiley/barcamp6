@@ -22,7 +22,7 @@ $(window).ready(function(){
       text: data.text,
       tags: data.tags
     }));
-    $("#socket-stream").append(el);
+    $("#socket-stream").prepend(el);
     socket.emit("ripp-it", "croak");
   });
 
@@ -40,7 +40,7 @@ $(window).ready(function(){
         text: data.text,
         tags: data.tags
       }));
-      $("#socket-stream").append(el);
+      $("#socket-stream").prepend(el);
     }
   });
 
