@@ -35,7 +35,6 @@ TweetSchema.statics.topFiveTags = function (done) {
     { $project: { tags: { $toLower: "$tags"} } },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
     { $sort: { count: -1 } },
-    { $limit: 5},
     done
   );
 };
@@ -61,7 +60,6 @@ TweetSchema.statics.topFiveTagsFiltered = function (hashTags, done) {
     { $match: { tags: { $in: hashTags} } },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
     { $sort: { count: -1 } },
-    { $limit: 5},
     done
   );
 }
@@ -87,7 +85,6 @@ TweetSchema.statics.tagLeaderboard = function (tag,done) {
     { $match: { tags: tag } },
     { $group: { _id : "$user", count: { $sum: 1 } } },
     { $sort: { count: -1 } },
-    { $limit: 5 },
     done
   );
 }

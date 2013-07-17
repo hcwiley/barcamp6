@@ -25,7 +25,7 @@ exports.lastTen = function (req, res) {
 };
 
 exports.topFive = function (req, res) {
-  Tweet.topFiveTagsFiltered(tags, function (err, stats) {
+  Tweet.topFiveTagsNormalizedFiltered(tags, function (err, stats) {
     res.json({ stats: stats });
   });
 };
