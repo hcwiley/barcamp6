@@ -73,10 +73,11 @@ if ('development' == app.get('env')) {
 // all environments
 app.use(
   sass.middleware({
-      src: __dirname + '/sass'
-    , dest: __dirname + '/public'
-    , debug: true
-    , outputStyle: 'compressed'
+      src         : __dirname + '/sass'
+    , dest        : __dirname + '/public'
+    , debug       : true
+    , force       : true
+    , outputStyle : 'compressed'
   })
 );
 
