@@ -1,4 +1,4 @@
 h4 leaders
 ul
   for item in stats
-    li= "#" + item._id
+    li= "#" + item._id + " " + (item.count * 100).toFixed(0) + "%"

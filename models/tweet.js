@@ -17,9 +17,9 @@ TweetSchema.statics.build = function (twitter_obj) {
   var self = new this(twitter_obj);
 
   self.tweet_id = twitter_obj.id
-  self.user = { 
-    id: twitter_obj.user.id, 
-    name: twitter_obj.user.name, 
+  self.user = {
+    id: twitter_obj.user.id,
+    name: twitter_obj.user.name,
     image: twitter_obj.user.profile_image_url,
     screen_name: twitter_obj.user.screen_name
   };
@@ -48,7 +48,7 @@ TweetSchema.statics.topFiveTagsNormalized = function (done) {
       for (var i = 0; i < tags.length; i++) {
         tags[i].count = tags[i].count / totalTweats;
       }
-      done(err,tags);     
+      done(err,tags);
     });
 }
 
@@ -73,7 +73,7 @@ TweetSchema.statics.topFiveTagsNormalizedFiltered = function (hashTags, done) {
       for (var i = 0; i < tags.length; i++) {
         tags[i].count = tags[i].count / totalTweats;
       }
-      done(err,tags);     
+      done(err,tags);
     });
 }
 
