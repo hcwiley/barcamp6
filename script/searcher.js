@@ -8,15 +8,18 @@ var twitter   = require('../lib/twitter_client')
   , async     = require('async')
   ;
 
-var tags = ['#barcampnola', '#bearcamp', '#bearcampnola', '#nolatech'];
+var tags = ['#getclever', "#noew", "#noew2014"]
 
-var search_opts = { count: 100 };
+var search_opts = { };//count: 100 };
 
-twitter
-  .search(tags.join(' OR '), search_opts, function (err, data) {
+console.log("searching...");
+
+module.exports = function(twitter){
+  twitter.search(tags.join(' OR '), search_opts, function (err, data) {
     data.statuses.forEach(function (twitter_obj) {
       var tweet = Tweet.build(twitter_obj);
-      tweet.save(console.log);
+      //console.log("searcher: " + tweet);
+      tweet.save();
     });
   });
-
+}
